@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth/auth';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { MessageProvider } from '../../providers/message/message';
 
 @IonicPage()
 @Component({
@@ -19,28 +13,37 @@ export class LoginPage {
   user: any = {};
 
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private authProvider: AuthProvider) {
+    public navParams: NavParams,
+    private authProvider: AuthProvider,
+    private messageProvider: MessageProvider,
+    public loadingCtrl: LoadingController) {
   }
 
   login() {
-      // this.loading = true;
-      this.authProvider.login(this.user.username, this.user.password)
-          .subscribe(
-              data => {
-                  console.log('Bien hecho mk.')
-                  this.navCtrl.push('SidemenuPage');
-              },
-              error => {
-                  // this.alertService.error(error);
-                  // this.loading = false;
-              });
+    console.log(this.user.username);
+
+    if (!this.user.username || !this.user.password) {
+      return;
+    }
+
+    let loading = this.loadingCtrl.create({
+      content: 'Iniciando sesión...'
+    });
+
+    loading.present();
+    this.authProvider.login(this.user.username, this.user.password)
+      .subscribe(
+      data => {
+        this.messageProvider.succes('Ha iniciado sesión', loading);
+        this.navCtrl.push('SidemenuPage');
+      },
+      error => {
+        this.messageProvider.error('Verifique nombre de usuario y contraseña', loading);
+      });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-    // reset login status
-    //this.authProvider.logout();
+
   }
 
 }

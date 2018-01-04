@@ -1,0 +1,64 @@
+<ion-content padding>
+  <ion-card *ngFor="let productEnabled of productsEnabled">
+    <ion-item-divider color="light" class="title-product-card">
+      <h2>{{productEnabled.product.shortName}}</h2>
+      <hr>
+      <p>
+        $ {{productEnabled.customPrice ? productEnabled.customPrice : 0}}
+        <span>({{productEnabled.product.unitsPack}} uds. paquete)</span>
+      </p>
+    </ion-item-divider>
+    <ion-card-content class="content-product-card">
+      <!-- <ion-grid> -->
+        <ion-row radio-group [(ngModel)]="productEnabled.state">
+          <ion-col col-5>
+            <ion-item class="item-input-amount">
+              <ion-input type="number" [(ngModel)]="productEnabled.amount" placeholder="Cantidad"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-3.2>
+            <ion-label>Horn.
+              <ion-radio value="baked"></ion-radio>
+            </ion-label>
+          </ion-col>
+          <ion-col col-3.5>
+            <ion-label>Cong.
+              <ion-radio value="frozen"></ion-radio>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      <!-- </ion-grid> -->
+    </ion-card-content>
+    <ion-row color="light" class="options-card">
+      <ion-col col-4 class="option-card" >
+        <button (click)="sendProductToCart(productEnabled)" ion-button icon-left clear small>
+          <ion-icon name="add-circle"></ion-icon>
+        <div>Agregar</div>
+      </button>
+      </ion-col>
+      <ion-col col-8 class="option-card">
+        <ion-chip *ngIf="productEnabled.bakedProduct" #chip3>
+          <ion-label>{{productEnabled.bakedProduct.amount}} Horn.</ion-label>
+          <button ion-button clear color="dark" (click)="removeProductCart(productEnabled, 'baked')">
+            <ion-icon name="close-circle"></ion-icon>
+          </button>
+        </ion-chip>
+        <ion-chip *ngIf="productEnabled.rawProduct" #chip3>
+          <ion-label>{{productEnabled.rawProduct.amount}} Cong.</ion-label>
+          <button ion-button clear color="dark" (click)="removeProductCart(productEnabled, 'frozen')">
+            <ion-icon name="close-circle"></ion-icon>
+          </button>
+        </ion-chip>
+        <!-- <button ion-button icon-left clear>
+        <ion-icon name="remove-circle"></ion-icon>
+        <div>Remover</div> -->
+        <!-- </button> -->
+      </ion-col>
+      <!-- <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col> -->
+    </ion-row>
+  </ion-card>
+</ion-content>

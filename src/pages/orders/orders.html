@@ -1,4 +1,13 @@
-<ion-tabs tabsPlacement="top">
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+<ion-content>    
+  <ion-tabs tabsPlacement="top">
     <ion-tab [root]="orderMylistRoot" tabTitle="Ver mis pedidos" tabIcon="information-circle"></ion-tab>
-    <ion-tab [root]="orderCreateRoot" tabTitle="Crear pedido" tabIcon="information-circle"></ion-tab>
-</ion-tabs>
+    <ion-tab [root]="orderCreateRoot" tabTitle="Crear pedido" ></ion-tab>
+  </ion-tabs>
+</ion-content>

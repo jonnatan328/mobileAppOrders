@@ -14,6 +14,11 @@ import { OrdersPageModule } from '../pages/orders/orders.module';
 import { AuthInterceptor} from '../providers/interceptor/auth.interceptor';
 
 import { AuthProvider } from '../providers/auth/auth';
+import { MessageProvider } from '../providers/message/message';
+import { OrderProvider } from '../providers/order/order';
+import { APP_CONFIG, APP_DI_CONFIG } from "../providers/app-config/app-config.constants";
+import { ClientProvider } from '../providers/client/client';
+import { DataSharedProvider } from '../providers/data-shared/data-shared';
 
 @NgModule({
   declarations: [
@@ -34,12 +39,13 @@ import { AuthProvider } from '../providers/auth/auth';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    AuthProvider
+    { provide: APP_CONFIG, useValue: APP_DI_CONFIG },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthProvider,
+    MessageProvider,
+    OrderProvider,
+    ClientProvider,
+    DataSharedProvider,
   ]
 })
 export class AppModule { }

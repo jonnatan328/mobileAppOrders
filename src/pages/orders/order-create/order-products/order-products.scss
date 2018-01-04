@@ -1,0 +1,60 @@
+page-order-products {
+  .title-product-card {
+    text-align: center;
+  }
+
+  .content-product-card {
+    padding: 0 !important;
+
+    .item-input-amount {
+      padding: 0 !important;
+    }
+  }
+
+  input[type="number"] {
+    // border: 1px solid #BBB;
+    // border-color: #BBB #ECECEC #ECECEC #BBB;
+    // width: 20%;
+    padding: .2rem;
+    margin: 0px;
+  }
+
+  hr.style-four {
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .label-md {
+    margin-bottom: 2px;
+  }
+
+  .options-card {
+    height: 41px;
+
+    .option-card {
+      padding: 0px !important;
+      display: inline-block;
+
+      .chip-md {
+        height: 26px;
+      }
+
+      ion-chip {
+        font-size: 10px;
+        // height: auto;
+        width: auto;
+
+        ion-label {
+          margin-right: -2px;
+          margin-top: -2px;
+        }
+
+        button {
+          margin-top: -3px;
+        }
+      }
+    }
+  }
+
+}

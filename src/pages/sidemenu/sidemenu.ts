@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -16,7 +17,8 @@ export class SidemenuPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public authProvider: AuthProvider) {
+              public authProvider: AuthProvider,
+              private storage: Storage) {
     this.items = [
       { title: 'Inicio', component: 'HomePage', icon: 'home' },
       { title: 'Pedidos', component: 'OrdersPage', icon: 'list-box' }
@@ -24,7 +26,7 @@ export class SidemenuPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SidemenuPage');
+    console.log(this.storage.get('auth_token'));
   }
 
   openPage(page) {
@@ -34,7 +36,7 @@ export class SidemenuPage {
 
   logout() {
     this.authProvider.logout();
-    this.navCtrl.push('LoginPage');
+    this.navCtrl.setRoot('LoginPage');
   }
 
 }

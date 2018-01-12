@@ -1,6 +1,6 @@
-<ion-menu persistent="true" type="overlay" [content]="content">
+<ion-menu type="overlay" [content]="content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="nero">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -9,14 +9,18 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let item of items" icon-left (click)="openPage(item)">
-        <ion-icon name="{{item.icon}}"></ion-icon>
-        {{item.title}}
+    <img color="light" src="assets/imgs/logo-menu.jpg" height="30%" width="100%"/>
+    <ion-list inset>
+      <button color="nero" menuClose ion-item *ngFor="let item of items" (click)="openPage(item)">
+        <ion-icon item-left name="{{item.icon}}"></ion-icon>
+          <h3 color="jambalaya">{{item.title}}</h3>
       </button>
-      <button ion-item menuClose icon-left (click)="logout()">
-        <ion-icon name="log-out"></ion-icon>
-        Cerrar sesión
+    </ion-list>
+    <!-- <hr> -->
+    <ion-list inset>
+      <button color="nero" menuClose ion-item (click)="logout()">
+        <ion-icon item-left  name="log-out"></ion-icon>
+        <h3>Cerrar sesión</h3>
       </button>
     </ion-list>
   </ion-content>

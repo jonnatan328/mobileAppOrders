@@ -21,9 +21,10 @@ export class AuthProvider {
 
   private authUrl: string;  // URL to web api
 
-  constructor( @Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient, private storage: Storage) {
+  constructor( @Inject(APP_CONFIG) private config: IAppConfig,
+    public http: HttpClient,
+    private storage: Storage) {
     this.authUrl = config.APP_URL + '/auth';
-    // console.log('Hello AuthProvider Provider');
   }
 
   login(username: string, password: string): Observable<any> {

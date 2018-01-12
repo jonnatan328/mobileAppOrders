@@ -20,15 +20,30 @@ export class OrderProvider {
 
   constructor(@Inject( APP_CONFIG ) private config: IAppConfig, public http: HttpClient) {
     this.orderUrl = config.APP_URL + '/order';
-    // console.log('Hello OrderProvider Provider');
   }
 
   createOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.orderUrl, order, httpOptions).pipe(
+    console.log(order);
+    return this.http.post<Order>(this.orderUrl + '/create', order, httpOptions).pipe(
       tap((order: Order) => console.log(`added order w/ id=${order.id}`)),
-      // catchError(console.log('addHero'))
-      // catchError(this.handleError<Order>('addHero'))
+      // catchError(console.log('addOrder'))
+      // catchError(this.handleError<Order>('addOrder'))
     );
+  }
+
+  validateMinOrderPrice(productsToOrder: any): Observable<any> {
+    return this.http.post<any>(this.orderUrl + '/validateMinOrderPrice', productsToOrder, httpOptions).pipe(
+      tap((data: any) => console.log('Total price validated')),
+      // catchError(console.log(''))
+      // catchError(this.handleError<Order>(''))
+    );
+  }
+
+  getOrdersByClient(): Observable<any[]> {
+    return this.http.get<any>(this.orderUrl + '/getByClient')
+      .pipe(
+        tap(orders => console.log('fetched orders')),
+      );
   }
 
 }

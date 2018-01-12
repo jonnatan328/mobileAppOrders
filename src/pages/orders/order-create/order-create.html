@@ -1,17 +1,17 @@
-<ion-content>
+<ion-content >
   <ion-toolbar color="gray">
     <ion-buttons end>
       <button ion-button icon-only (click)="showShoppingCart()">
-        <ion-badge color="accent">{{ amountProductsRequested }}</ion-badge>
+        <ion-badge color="sunset-orange">{{ amountProductsRequested }}</ion-badge>
         <ion-icon name="cart"></ion-icon>
       </button>
     </ion-buttons>
 
-    <ion-segment [(ngModel)]="page" color="primary">
+    <ion-segment [(ngModel)]="page" color="pesto">
       <ion-segment-button (click)="goToPage(option)" value="{{option.title}}" *ngFor="let option of options">{{option.title}}
-        <!-- <ion-icon name="camera"></ion-icon> -->
+        <ion-icon style="zoom:0.7;" name="{{option.icon}}"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <ion-nav [root]="rootCreateOrderPage"></ion-nav>
+  <ion-nav #tabs [root]="rootCreateOrderPage"></ion-nav>
 </ion-content>

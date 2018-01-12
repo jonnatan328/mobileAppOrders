@@ -1,4 +1,11 @@
-
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let order of orders">
+      <h1 item-start>{{order.id}}</h1>
+      <h3><strong>Creado:</strong></h3>
+      {{order.created_at | date: "dd/MM/yyyy hh:mma":'+0000'}}
+      <p>{{order.state}}</p>
+      <button ion-button clear item-end small (click)="showDetails(order)">Ver más</button>
+    </ion-item>
+  </ion-list>
 </ion-content>

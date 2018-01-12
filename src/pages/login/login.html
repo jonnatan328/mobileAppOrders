@@ -7,17 +7,17 @@
       <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
         <ion-list inset no-line>
           <ion-item>
-            <ion-label floating>Nombre de usuario</ion-label>
+            <ion-label floating color="light">Nombre de usuario</ion-label>
             <ion-input name="username" id="loginField" type="text" required [(ngModel)]="user.username"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Contraseña</ion-label>
+            <ion-label floating color="light">Contraseña</ion-label>
             <ion-input name="password" id="passwordField" type="password" required [(ngModel)]="user.password"></ion-input>
           </ion-item>
         </ion-list>
 
         <!-- <div *ngIf="error" class="alert alert-danger">{{error}}</div> -->
-        <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Iniciar sesión
+        <button color="sienna" ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Iniciar sesión
           </button>
       </form>
     </ion-card-content>

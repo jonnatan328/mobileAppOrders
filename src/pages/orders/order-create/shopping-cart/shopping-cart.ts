@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { NavController, NavParams, Events, ViewController, ActionSheetController, AlertController } from 'ionic-angular';
 
-import { DataSharedProvider } from "../../../../providers/data-shared/data-shared";
+import { OrdersDataSharedProvider } from "../../../../providers/orders-data-shared/orders-data-shared";
 import { MessageProvider } from "../../../../providers/message/message";
 
 
@@ -12,25 +12,35 @@ import { MessageProvider } from "../../../../providers/message/message";
 export class ShoppingCartPage {
 
   private productsAdded: Array<any>;
+  private productsEnabled: Array<any>;
+  private orderGeneral: any;
 
   constructor(public viewCtrl: ViewController,
-    private dataSharedProvider: DataSharedProvider,
+    private ordersDataSharedProvider: OrdersDataSharedProvider,
     public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public events: Events,
+    private messageProvider: MessageProvider,) {
+
+      this.productsAdded = [];
+      this.productsEnabled = [];
+      this.orderGeneral = {};
   }
 
   ionViewDidLoad() {
-    this.getProductsCart();
+    this.setProductsVariables();
   }
 
-  getProductsCart() {
-    this.productsAdded = this.dataSharedProvider.getData('productsAdded');
-    console.log(this.productsAdded);
+  setProductsVariables() {
+
+    this.productsAdded = this.ordersDataSharedProvider.getData('productsAdded');
+    this.productsEnabled = this.ordersDataSharedProvider.getData('productsEnabled');
+    this.orderGeneral = this.ordersDataSharedProvider.getData('orderGeneral');
   }
 
   dismiss() {
-    let data = { 'foo': 'bar' };
-    this.viewCtrl.dismiss(data);
+    let amountProducts = this.productsAdded.length;
+    this.viewCtrl.dismiss(amountProducts);
   }
 
   openOptions(product: any) {
@@ -44,13 +54,13 @@ export class ShoppingCartPage {
           handler: () => {
             this.removeProductCart(product);
           }
-        },{
+        }, {
           text: 'Modificar cantidad',
           icon: 'create',
           handler: () => {
             this.modifyAmount(product);
           }
-        },{
+        }, {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -69,7 +79,8 @@ export class ShoppingCartPage {
       inputs: [
         {
           name: 'amount',
-          placeholder: 'Cantidad'
+          placeholder: 'Cantidad',
+          type: 'number'
         },
       ],
       buttons: [
@@ -82,8 +93,10 @@ export class ShoppingCartPage {
         {
           text: 'Guardar',
           handler: data => {
-            product.amount = data.amount;
-            console.log(data);
+            // product.amount = data.amount;
+            product.amount = this.roundAmount(parseInt(data.amount), product.unitsPack);
+            product.subtotal = product.amount * product.price;
+            this.setTotal();
           }
         }
       ]
@@ -93,7 +106,44 @@ export class ShoppingCartPage {
 
   removeProductCart(product: any) {
     let indexAdded = this.productsAdded.indexOf(product);
+    let clientProduct = this.productsEnabled[product.indexClientProduct];
+
     this.productsAdded.splice(indexAdded, 1);
+
+    if (product.baked) {
+      delete clientProduct.bakedProduct;
+    } else {
+      delete clientProduct.rawProduct;
+    }
+
+    this.setTotal();
+  }
+
+  roundAmount(amount: number, unitsPack: number): number {
+    if (unitsPack) {
+      let mod = amount % unitsPack;
+
+      // Si la cantidad a pedir no es multiplo de las unidades por paquete
+      // a la cantidad a pedir se suma la cantidad faltante requerida.
+      if (mod != 0) {
+        let halfUnitsPack = Math.round(unitsPack / 2);
+        let rest = unitsPack - mod;
+        if (mod >= halfUnitsPack || amount < unitsPack) {
+          amount += rest;
+        } else {
+          amount -= mod;
+        }
+        this.messageProvider.succes('La cantidad se redondeó a ' + amount, null);
+      }
+    }
+    return amount;
+  }
+
+  setTotal() {
+    this.orderGeneral.total = 0;
+    for (let product of this.productsAdded) {
+      this.orderGeneral.total += product.subtotal;
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
+
 import { AuthProvider } from '../../providers/auth/auth';
 import { MessageProvider } from '../../providers/message/message';
 
@@ -16,12 +17,10 @@ export class LoginPage {
     public navParams: NavParams,
     private authProvider: AuthProvider,
     private messageProvider: MessageProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,) {
   }
 
   login() {
-    console.log(this.user.username);
-
     if (!this.user.username || !this.user.password) {
       return;
     }
@@ -35,7 +34,7 @@ export class LoginPage {
       .subscribe(
       data => {
         this.messageProvider.succes('Ha iniciado sesión', loading);
-        this.navCtrl.push('SidemenuPage');
+        this.navCtrl.setRoot('SidemenuPage');
       },
       error => {
         this.messageProvider.error('Verifique nombre de usuario y contraseña', loading);

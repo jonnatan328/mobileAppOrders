@@ -6,7 +6,7 @@ import { ToastController } from 'ionic-angular';
 export class MessageProvider {
 
   constructor(public toastCtrl: ToastController) {
-    console.log('Hello MessageProvider Provider');
+    // console.log('Hello MessageProvider Provider');
   }
 
   succes(message: string, loading: any) {
@@ -16,7 +16,7 @@ export class MessageProvider {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: 'middle'
+      position: 'bottom'
     });
     toast.present();
   }
@@ -28,7 +28,7 @@ export class MessageProvider {
     let toast = this.toastCtrl.create({
       message: 'Error: ' + message,
       duration: 3000,
-      position: 'middle'
+      position: 'bottom'
     });
     toast.present();
   }

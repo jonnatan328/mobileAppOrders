@@ -1,3 +1,18 @@
 page-sidemenu {
+  ion-menu {
+    ion-content {
+      background-color: color($colors, nero) !important;
+
+      ion-item {
+        background-color: color($colors, nero) !important;
+      }
+
+      img {
+        opacity: 0.5;
+      }
+
+    }
+  }
+
 
 }

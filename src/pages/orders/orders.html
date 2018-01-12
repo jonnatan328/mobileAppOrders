@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="nero">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-title>Pedidos</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>    
-  <ion-tabs tabsPlacement="top">
-    <ion-tab [root]="orderMylistRoot" tabTitle="Ver mis pedidos" tabIcon="information-circle"></ion-tab>
-    <ion-tab [root]="orderCreateRoot" tabTitle="Crear pedido" ></ion-tab>
+<ion-content>
+  <ion-tabs #tabss color="jambalaya" tabsPlacement="top">
+    <ion-tab  *ngFor="let tab of tabs" [root]="tab.component" [tabTitle]="tab.title" [tabIcon]="tab.icon"></ion-tab>
   </ion-tabs>
 </ion-content>

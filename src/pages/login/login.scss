@@ -1,12 +1,11 @@
 page-login {
   .background {
-    background-image: url("../../assets/imgs/Trigo-background.jpg");
+    background-image: url("../assets/imgs/Trigo-background.jpg");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
   }
-
   // .scroll-content {
   //   align-content: center;
   //   display: flex;
@@ -14,7 +13,6 @@ page-login {
   //   justify-content: center;
   //   text-align: center;
   // }
-  
   ion-card.card {
     box-shadow: none;
     background: rgba(0, 0, 0, 0.5);
@@ -30,13 +28,17 @@ page-login {
   .list > .item-block:first-child {
     border: medium none;
   }
+  .input-has-focus {
+    color: #000;
+  }
 
   .item {
     margin-bottom: 10px;
     background: rgba(0, 0, 0, 0.5);
+    // opacity: 0.2;
     border: medium none;
 
-    ,
+
     .text-input {
       color: #fff;
     }

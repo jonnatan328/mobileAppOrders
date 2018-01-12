@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="nero">
+    <ion-title>
+      Detalles del pedido
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()" small>
+        <span ion-text showWhen="ios">Cerrar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header color="pesto">
+      <h2>Información del pedido</h2>
+    </ion-list-header>
+    <ion-item>
+      <ion-label stacked>Fecha de creación</ion-label>
+      <ion-input type="text" value="{{createdAt}}" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Fecha de entrega</ion-label>
+      <ion-input type="text" value="{{deliveryDate}}" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Empleado habilitado</ion-label>
+      <ion-input type="text" value="{{order.employeeName}}" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Comentario</ion-label>
+      <ion-textarea type="text" readonly="true" value="{{order.additional_information}}"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header color="pesto">
+      <h2>Productos</h2>
+    </ion-list-header>
+    <ion-item *ngFor="let product of order.products">
+      <ion-icon name="checkmark-circle" item-start></ion-icon>
+      <h2>{{product.short_name}}</h2>
+      <h3>{{product.baked ? 'Horneado' : 'Congelado'}} X{{product.amount}}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>

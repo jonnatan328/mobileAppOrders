@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the OrderMylistPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { OrderDetailsPage } from "./order-details/order-details";
+
+import { OrderProvider } from "../../../providers/order/order";
+import { OrdersDataSharedProvider } from "../../../providers/orders-data-shared/orders-data-shared";
+import { MessageProvider } from "../../../providers/message/message";
 
 // @IonicPage()
 @Component({
@@ -15,11 +14,51 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class OrderMylistPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private orders: any;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private orderProvider: OrderProvider,
+    public modalCtrl: ModalController,
+    private ordersDataSharedProvider: OrdersDataSharedProvider,
+    private messageProvider: MessageProvider,
+    public loadingCtrl: LoadingController,) {
+      console.log('order my list')
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderMylistPage');
+
+  }
+
+  ionViewWillEnter() {
+    console.log('order my list will enter');
+    this.getOrders();
+  }
+
+  getOrders() {
+    let loading = this.loadingCtrl.create({
+      content: 'Cargando...'
+    });
+
+    loading.present();
+    this.orderProvider.getOrdersByClient()
+      .subscribe(
+      data => {
+        loading.dismiss();
+        this.orders = data;
+      },
+      error => {
+        this.messageProvider.error('verifique la conexión a internet', loading);
+        console.log(error)
+      });
+  }
+
+  showDetails(order: any){
+    let orderDetailsModal = this.modalCtrl.create(OrderDetailsPage, {order: order}, {
+      enableBackdropDismiss: true,
+      cssClass: 'order-details-modal'
+    });
+    orderDetailsModal.present();
   }
 
 }

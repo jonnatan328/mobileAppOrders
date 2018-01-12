@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="nero">
+    <ion-title>
+      Resumen del pedido
+    </ion-title>
+
+  </ion-toolbar>
+  <ion-toolbar color="jambalaya" >
+    <ion-buttons start>
+      <button ion-button (click)="dismiss(true)" small>
+        <span ion-text>Confirmar</span>
+        <!-- <span ion-text color="primary" showWhen="ios">Confirmar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon> -->
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss(false)" small>
+        <span ion-text >Cancelar</span>
+        <!-- <span ion-text color="primary" showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon> -->
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div padding>
+    <p text-justify>La siguiente información se enviará en su pedido, si está seguro de los datos ingresados seleccione la opción confirmar.</p>
+  </div>
+  <ion-list>
+    <ion-list-header color="pesto">
+      <h2>Información del pedido</h2>
+    </ion-list-header>
+    <ion-item>
+      <ion-label stacked>Fecha de entrega</ion-label>
+      <ion-input type="text" value="{{deliveryDateFormat}}" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Horario de entrega</ion-label>
+      <ion-input type="text" value="{{order.initialSuggestedTime}}-{{order.finalSuggestedTime}}" readonly="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Comentario</ion-label>
+      <ion-textarea type="text" readonly="true" value="{{order.additionalInformation}}"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header color="pesto">
+      <h2>Productos</h2>
+    </ion-list-header>
+    <ion-item *ngFor="let product of order.productsToOrder">
+      <ion-icon name="checkmark-circle" item-start></ion-icon>
+      <h2>{{product.name}}</h2>
+      <h3>{{product.baked ? 'Horneado' : 'Congelado'}} X{{product.amount}}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>

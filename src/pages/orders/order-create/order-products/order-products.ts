@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { ClientProvider } from "../../../../providers/client/client";
-import { DataSharedProvider } from "../../../../providers/data-shared/data-shared";
+import { OrdersDataSharedProvider } from "../../../../providers/orders-data-shared/orders-data-shared";
 import { MessageProvider } from "../../../../providers/message/message";
 
 import { ProductEnabled } from "../../../../models/product/product-enabled.model";
@@ -15,26 +15,29 @@ export class OrderProductsPage {
 
   private productsEnabled: ProductEnabled[];
   private productsAdded: any;
+  private orderGeneral: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private clientProvider: ClientProvider,
-    private dataSharedProvider: DataSharedProvider,
+    private ordersDataSharedProvider: OrdersDataSharedProvider,
     private messageProvider: MessageProvider,
     public events: Events) {
-      event.subcribe.......
+
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.setProductsVariables();
   }
 
   setProductsVariables() {
-    this.productsEnabled = this.dataSharedProvider.getData('productsEnabled');
-    this.productsAdded = this.dataSharedProvider.getData('productsAdded');
+    this.productsEnabled = this.ordersDataSharedProvider.getData('productsEnabled');
+    this.productsAdded = this.ordersDataSharedProvider.getData('productsAdded');
+    this.orderGeneral = this.ordersDataSharedProvider.getData('orderGeneral');
+    this.setTotal();
   }
 
-  sendProductToCart(clientProduct: any) {
+  sendProductToCart(clientProduct: any, indexClientProduct: number) {
     if (!clientProduct.state) {
       this.messageProvider.error("Debe seleccionar horneado o congelado.", null);
       return;
@@ -44,12 +47,10 @@ export class OrderProductsPage {
       return;
     }
 
-    let product = this.buildProduct(clientProduct);
+    let product = this.buildProduct(clientProduct, indexClientProduct);
 
-    if (!this.productsAdded) {
-      this.productsAdded = [];
+    if (this.productsAdded.length == 0) {
       this.productsAdded.push(product);
-      this.dataSharedProvider.setData('productsAdded', this.productsAdded);
     } else {
       let index = this.productsAdded.indexOf(product);
       if (index != -1) {
@@ -59,12 +60,21 @@ export class OrderProductsPage {
       this.productsAdded.push(product);
     }
 
-    this.sendAmountProductsAdded()
+    this.setTotal();
+    this.sendAmountProductsAdded();
 
   }
 
+  setTotal() {
+    let total:number = 0;
+    for (let product of this.productsAdded) {
+      total += product.subtotal;
+    }
+    this.orderGeneral.total = total;
+  }
 
-  buildProduct(clientProduct) {
+
+  buildProduct(clientProduct, indexClientProduct) {
     let currentProduct = null;
     let rawProduct = null;
     let bakedProduct = null;
@@ -78,22 +88,7 @@ export class OrderProductsPage {
     delete clientProduct.state;
     clientProduct.amount = '';
 
-    if (unitsPack) {
-      let mod = amount % unitsPack;
-
-      // Si la cantidad a pedir no es multiplo de las unidades por paquete
-      // a la cantidad a pedir se suma la cantidad faltante requerida.
-      if (mod != 0) {
-        let halfUnitsPack = Math.round(unitsPack / 2);
-        let rest = unitsPack - mod;
-        if (mod >= halfUnitsPack || amount < unitsPack) {
-          amount += rest;
-        } else {
-          amount -= mod;
-        }
-        this.messageProvider.succes('La cantidad se redondeó a ' + amount, null);
-      }
-    }
+    amount = this.roundAmount(amount, unitsPack);
 
     if (state == 'frozen' && !clientProduct.rawProduct) {
       rawProduct = {
@@ -101,7 +96,10 @@ export class OrderProductsPage {
         name: clientProduct.customName ? clientProduct.customName : clientProduct.product.shortName,
         amount: amount,
         price: clientProduct.customPrice,
-        baked: false
+        baked: false,
+        indexClientProduct: indexClientProduct,
+        unitsPack: unitsPack,
+        subtotal: amount * clientProduct.customPrice,
       }
       clientProduct.rawProduct = rawProduct;
     } else if (state == 'baked' && !clientProduct.bakedProduct) {
@@ -111,7 +109,10 @@ export class OrderProductsPage {
         name: clientProduct.customName ? clientProduct.customName : clientProduct.product.shortName,
         amount: amount,
         price: clientProduct.customPrice,
-        baked: true
+        baked: true,
+        indexClientProduct: indexClientProduct,
+        unitsPack: unitsPack,
+        subtotal: amount * clientProduct.customPrice,
       }
       clientProduct.bakedProduct = bakedProduct;
     } else if (!state) {
@@ -128,6 +129,26 @@ export class OrderProductsPage {
 
   }
 
+  roundAmount(amount: number, unitsPack: number): number {
+    if (unitsPack) {
+      let mod = amount % unitsPack;
+
+      // Si la cantidad a pedir no es multiplo de las unidades por paquete
+      // a la cantidad a pedir se suma la cantidad faltante requerida.
+      if (mod != 0) {
+        let halfUnitsPack = Math.round(unitsPack / 2);
+        let rest = unitsPack - mod;
+        if (mod >= halfUnitsPack || amount < unitsPack) {
+          amount += rest;
+        } else {
+          amount -= mod;
+        }
+        this.messageProvider.succes('La cantidad se redondeó a ' + amount, null);
+      }
+    }
+    return amount;
+  }
+
 
   removeProductCart(clientProduct: any, type: string) {
     let indexAdded: number;
@@ -141,6 +162,7 @@ export class OrderProductsPage {
     }
 
     this.productsAdded.splice(indexAdded, 1);
+    this.setTotal();
     this.sendAmountProductsAdded();
   }
 

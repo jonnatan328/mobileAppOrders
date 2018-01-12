@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class DataSharedProvider {
+export class OrdersDataSharedProvider {
 
   dataObject: any = {};
 
   constructor(public http: HttpClient) {
-    // console.log('Hello DataSharedProvider Provider');
   }
 
   setData(key: string, value: any) {
@@ -16,6 +15,10 @@ export class DataSharedProvider {
 
   getData(key: string){
     return this.dataObject[key];
+  }
+
+  cleanData(){
+    this.dataObject = {};
   }
 
 }

@@ -7,29 +7,26 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { APP_CONFIG } from "../app-config/app-config.constants";
 import { IAppConfig } from "../app-config/app-config.interface";
 
-import { ProductEnabled } from "../../models/product/product-enabled.model";
-
+import { ClientEmployee } from "../../models/client-employee/client-employee.model";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
-export class ClientProvider {
+export class ClientEmployeeProvider {
 
-  private clientUrl: string;
+  private clientEmployeeUrl: string;
 
   constructor(@Inject( APP_CONFIG ) private config: IAppConfig, public http: HttpClient) {
-    this.clientUrl = config.APP_URL + '/client';
+      this.clientEmployeeUrl = config.APP_URL + '/clientEmployee';
   }
 
-  /** GET products enabled from the server */
-  getProductsEnabled (): Observable<ProductEnabled[]> {
-    return this.http.get<ProductEnabled[]>(this.clientUrl + '/getProductsEnabled')
+  /** GET client employees from the server */
+  getClientEmployees (): Observable<ClientEmployee[]> {
+    return this.http.get<ClientEmployee[]>(this.clientEmployeeUrl + '/getEmployeesByClient')
       .pipe(
-        // map(productsEnabled[] => console.log(productsEnabled[0])),
-        tap(productsEnabled => console.log(`fetched productsEnabled`)),
-        // catchError(this.handleError('getHeroes', []))
+        tap(ClientEmployee => console.log('fetched client employees')),
       );
   }
 

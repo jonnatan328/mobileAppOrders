@@ -5,4 +5,5 @@ export class Order {
   initialSuggestedTime: string;
   finalSuggestedTime: string;
   additionalInformation: string;
+  productsToOrder: Array<any>;
 }

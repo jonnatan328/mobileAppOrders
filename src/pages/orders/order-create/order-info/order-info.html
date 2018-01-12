@@ -1,3 +1,42 @@
-<ion-content padding>
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="pesto">
+      <h2>Información de entrega</h2>
+    </ion-item-divider>
+    <ion-item>
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Fecha entrega</ion-label>
+      <ion-datetime displayFormat="DD/MMM/YYYY" (ngModelChange)="validateDeliveryDate($event)" cancelText="Cancelar" doneText="Aceptar" min="{{tomorrow}}" [(ngModel)]="order.deliveryDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="watch" item-start></ion-icon>
+      <ion-label>Hora inicial entrega</ion-label>
+      <ion-datetime displayFormat="h:mm A" hourValues="{{hourValues}}" (ngModelChange)="validateTime($event, 'initial')" cancelText="Cancelar" doneText="Aceptar" pickerFormat="HH mm" [(ngModel)]="order.initialDeliveryTime"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="stopwatch" item-start></ion-icon>
+      <ion-label>Hora final entrega</ion-label>
+      <ion-datetime displayFormat="h:mm A" (ngModelChange)="validateTime($event, 'final')" hourValues="{{hourValues}}" cancelText="Cancelar" doneText="Aceptar" pickerFormat="HH mm " [(ngModel)]="order.finalDeliveryTime"></ion-datetime>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="pesto">
+      <h2>Información adicional</h2></ion-item-divider>
+    <ion-item>
+      <ion-icon name="briefcase" item-start></ion-icon>
+      <ion-label>Empleado</ion-label>
+      <ion-select [(ngModel)]="order.clientEmployee">
+        <ion-option *ngFor="let clientEmployee of clientEmployees" value="{{clientEmployee.id}}">{{clientEmployee.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="clipboard" item-start></ion-icon>
+      <ion-label stacked>Comentario</ion-label>
+      <ion-textarea [(ngModel)]="order.additionInformation" rows="4"></ion-textarea>
+    </ion-item>
+  </ion-item-group>
+  <ion-fab right bottom >
+    <button color="sienna" ion-fab (click)="showOrderResume()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

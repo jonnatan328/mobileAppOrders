@@ -5,6 +5,11 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { AuthProvider } from '../../providers/auth/auth';
 import { MessageProvider } from '../../providers/message/message';
 
+/**
+* Page which the user add your credentials to authenticate in the app.
+* Author: Jonnatan Ríos Vásquez- jrios328@gmail.com
+*/
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -20,6 +25,9 @@ export class LoginPage {
     public loadingCtrl: LoadingController,) {
   }
 
+  /**
+  * Function to get the username and password and sign in the app.
+  */
   login() {
     if (!this.user.username || !this.user.password) {
       return;
@@ -37,12 +45,8 @@ export class LoginPage {
         this.navCtrl.setRoot('SidemenuPage');
       },
       error => {
-        this.messageProvider.error('Verifique nombre de usuario y contraseña', loading);
+        this.messageProvider.error('verifique nombre de usuario y contraseña', loading);
       });
-  }
-
-  ionViewDidLoad() {
-
   }
 
 }

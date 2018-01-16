@@ -10,14 +10,17 @@ import { Storage } from '@ionic/storage';
 export class AuthInterceptor implements HttpInterceptor {
 
   private tokenRequest: string;
+
   constructor(private storage: Storage) {
-    this.getToken();
+    console.log("Constructor interceptor")
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(this.tokenRequest);
-    if (this.tokenRequest) {
-      let authHeader = this.tokenRequest;
+    // this.getToken();
+    let tokenRequest = localStorage.getItem('auth_token');
+    console.log('token',tokenRequest);
+    if (tokenRequest) {
+      let authHeader = 'JWT ' + tokenRequest;
       req = req.clone({ setHeaders: { authorization: authHeader } });
     }
     // console.log(req);

@@ -1,3 +1,8 @@
+/**
+* Modelo que representa a un pedido.
+* author: Jonnatan Ríos Vásquez- jrios328@gmail.com
+*/
+
 export class Order {
   id: number;
   deliveryDate: number;

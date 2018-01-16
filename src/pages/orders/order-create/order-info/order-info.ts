@@ -19,6 +19,7 @@ import moment from 'moment';
 })
 export class OrderInfoPage {
 
+  // Declarations of the variables.
   private order: any;
   private clientEmployees: Array<ClientEmployee>;
   private tomorrow: string;
@@ -35,25 +36,40 @@ export class OrderInfoPage {
     private messageProvider: MessageProvider,
     public events: Events) {
 
+    /**
+    * Create the order object.
+    */
     this.order = {};
   }
 
+  /**
+  * Run the code when the page was load.
+  */
   ionViewDidLoad() {
     this.initialSetting()
   }
 
+  /**
+  * set the initial setting.
+  */
   initialSetting() {
-    // // Initial setting for the delivery date.
+    // Initial setting for the delivery date.
     this.tomorrow = moment().add(1, 'days').toISOString();
 
     // Get the order data from the service.
     this.order = this.ordersDataSharedProvider.getData('orderInfo');
-    this.validateDeliveryDate(this.order.deliveryDate);
     this.clientEmployees = this.order.clientEmployees;
 
+    // Validate the initial deliveryDate.
+    this.validateDeliveryDate(this.order.deliveryDate);
+
+    // The hours enabled to request the delivery time.
     this.hourValues = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   }
 
+  /**
+  * Set the final delivery time from the initial delivery time.
+  */
   setFinalDeliveryTime = () => {
     let defaultFinalTime: any;
     defaultFinalTime = moment(this.order.initialDeliveryTime).utcOffset(0);
@@ -61,6 +77,10 @@ export class OrderInfoPage {
     this.order.finalDeliveryTime = defaultFinalTime.toISOString();
   }
 
+  /**
+  * Function to validate the initial or final time in order to that the final time wont be smaller than
+  * initial time and the initial time wont be higher than final time.
+  */
   validateTime(currentDeliveryTime, type) {
     let finalTimeMoment: any;
     let initialTimeMoment: any;
@@ -85,6 +105,9 @@ export class OrderInfoPage {
     }
   }
 
+  /**
+  * Function to validate that the delivery date is not sunday.
+  */
   validateDeliveryDate(currentDeliveryDate) {
     let deliveryDateMoment: any;
     deliveryDateMoment = moment(currentDeliveryDate).utcOffset(0);
@@ -95,6 +118,9 @@ export class OrderInfoPage {
     }
   }
 
+  /**
+  * Function to show modal with the resume of the order.
+  */
   showOrderResume() {
     this.productsAdded = this.ordersDataSharedProvider.getData('productsAdded');
     console.log(this.productsAdded);
@@ -126,7 +152,6 @@ export class OrderInfoPage {
 
     this.orderProvider.validateMinOrderPrice({productsToOrder: productsToOrder})
       .subscribe(data => {
-        console.log(data);
         loading.dismiss();
         if (!data.isValid) {
           let alertTotalPrice = this.alertCtrl.create({
@@ -159,6 +184,9 @@ export class OrderInfoPage {
 
   }
 
+  /**
+  * Function to create an order.
+  */
   createOrder() {
     console.log('Creando pedido...')
     let orderParams = this.buildOrderObject(true);
@@ -185,6 +213,9 @@ export class OrderInfoPage {
 
   }
 
+  /**
+  * Build the order project with attributes necessary.
+  */
   buildOrderObject(toCreate: boolean): any {
     let productsToOrder: Array<any> = [];
     let product: any;

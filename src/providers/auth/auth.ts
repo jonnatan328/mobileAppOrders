@@ -34,9 +34,9 @@ export class AuthProvider {
         // login successful if there's a jwt token in the response
         let user = response;
         if (user && user.token) {
-          console.log('logged');
           // store jwt token in ionic storage to keep user logged in between page refreshes
-          this.storage.set('auth_token', user.token);
+          localStorage.setItem('auth_token', user.token)
+          // return this.storage.set('auth_token', user.token);
         }
       }),
       tap(_ => console.log('logged in user')),
@@ -44,8 +44,8 @@ export class AuthProvider {
   }
 
   logout() {
-    // remove user from local storage to log user out
-    this.storage.remove('auth_token');
+    localStorage.clear();
+
   }
 
   // verify if the user is authenticated.

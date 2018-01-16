@@ -19,6 +19,7 @@
       <ion-datetime displayFormat="h:mm A" (ngModelChange)="validateTime($event, 'final')" hourValues="{{hourValues}}" cancelText="Cancelar" doneText="Aceptar" pickerFormat="HH mm " [(ngModel)]="order.finalDeliveryTime"></ion-datetime>
     </ion-item>
   </ion-item-group>
+
   <ion-item-group>
     <ion-item-divider color="pesto">
       <h2>Información adicional</h2></ion-item-divider>
@@ -35,8 +36,8 @@
       <ion-textarea [(ngModel)]="order.additionInformation" rows="4"></ion-textarea>
     </ion-item>
   </ion-item-group>
-  <ion-fab right bottom >
+  
+  <ion-fab right bottom>
     <button color="sienna" ion-fab (click)="showOrderResume()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-
 </ion-content>

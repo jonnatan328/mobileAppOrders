@@ -19,8 +19,8 @@ import { MessageProvider } from '../providers/message/message';
 import { OrderProvider } from '../providers/order/order';
 import { APP_CONFIG, APP_DI_CONFIG } from "../providers/app-config/app-config.constants";
 import { ClientProvider } from '../providers/client/client';
-// import { DataSharedProvider } from '../providers/data-shared/data-shared';
 import { ClientEmployeeProvider } from '../providers/client-employee/client-employee';
+import { GlobalDataSharedProvider } from '../providers/global-data-shared/global-data-shared';
 
 @NgModule({
   declarations: [
@@ -54,8 +54,8 @@ import { ClientEmployeeProvider } from '../providers/client-employee/client-empl
     MessageProvider,
     OrderProvider,
     ClientProvider,
-    // DataSharedProvider,
     ClientEmployeeProvider,
+    GlobalDataSharedProvider,
   ]
 })
 export class AppModule { }

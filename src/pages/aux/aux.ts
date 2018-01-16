@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the AuxPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Página auxiliar sin contenido html para cargar parcialmente.
+ * Author: Jonnatan Ríos Vásquez- jrios328@gmail.com
  */
 
 @Component({
@@ -18,7 +16,6 @@ export class AuxPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AuxPage');
   }
 
 }

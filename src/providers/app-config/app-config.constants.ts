@@ -3,7 +3,7 @@ import { IAppConfig } from "./app-config.interface";
 
 export const APP_DI_CONFIG: IAppConfig = {
 
-  APP_URL: 'http://lafournee.com.co',
+  APP_URL: 'api',
 
 };
 

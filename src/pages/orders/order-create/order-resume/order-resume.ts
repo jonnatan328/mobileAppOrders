@@ -17,7 +17,7 @@ export class OrderResumePage {
      public viewCtrl: ViewController) {
 
     this.order = navParams.get('order');
-    this.deliveryDateFormat = moment(this.order.deliveryDate).format("DD/MM/YYYY");
+    this.deliveryDateFormat = moment(this.order.deliveryDate).utcOffset(0).format("DD/MM/YYYY");
   }
 
   dismiss(confirm) {

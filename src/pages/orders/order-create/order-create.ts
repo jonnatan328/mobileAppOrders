@@ -57,7 +57,6 @@ export class OrderCreatePage {
   }
 
   ionViewWillLeave() {
-    console.log('leaving..', this.rootCreateOrderPage)
     this.cleanData();
     this.page = "Productos";
   }
@@ -98,7 +97,7 @@ export class OrderCreatePage {
     let tomorrow: any;
 
     // Initial setting for the delivery date.
-    tomorrow = moment().add(1, 'days').toISOString();
+    tomorrow = moment().utcOffset(0).add(1, 'days').toISOString();
     this.orderInfo.deliveryDate = tomorrow;
 
     // Initial setting for the initial time.

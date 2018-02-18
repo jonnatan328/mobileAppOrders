@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // this.getToken();
     let tokenRequest = localStorage.getItem('auth_token');
     console.log('token',tokenRequest);
+    console.log('req',req);
     if (tokenRequest) {
       let authHeader = 'JWT ' + tokenRequest;
       req = req.clone({ setHeaders: { authorization: authHeader } });

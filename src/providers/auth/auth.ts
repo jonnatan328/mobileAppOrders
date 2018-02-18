@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
+// import { HTTP } from '@ionic-native/http';
 
 import { Storage } from '@ionic/storage';
 
@@ -20,11 +21,14 @@ const httpOptions = {
 export class AuthProvider {
 
   private authUrl: string;  // URL to web api
+  private user: any;
 
   constructor( @Inject(APP_CONFIG) private config: IAppConfig,
     public http: HttpClient,
+    // private http: HTTP,
     private storage: Storage) {
     this.authUrl = config.APP_URL + '/auth';
+    this.user = {};
   }
 
   login(username: string, password: string): Observable<any> {

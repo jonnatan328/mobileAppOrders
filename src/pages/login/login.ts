@@ -24,7 +24,6 @@ export class LoginPage {
     private messageProvider: MessageProvider,
     public loadingCtrl: LoadingController,) {
   }
-
   /**
   * Function to get the username and password and sign in the app.
   */
@@ -45,6 +44,7 @@ export class LoginPage {
         this.navCtrl.setRoot('SidemenuPage');
       },
       error => {
+        console.log(error);
         this.messageProvider.error('verifique nombre de usuario y contraseña', loading);
       });
   }

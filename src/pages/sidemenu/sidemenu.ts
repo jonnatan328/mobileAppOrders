@@ -15,7 +15,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class SidemenuPage {
 
-  rootPage: string = 'HomePage';
+  rootPage: string = 'OrdersPage';
   items: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public navCtrl: NavController,

@@ -32,6 +32,7 @@
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-wkwebview-ionic-xhr": "^2.1.1",
     "cordova-sqlite-storage": "^2.2.0",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -53,7 +54,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-wkwebview-ionic-xhr": {}
     },
     "platforms": [
       "android",

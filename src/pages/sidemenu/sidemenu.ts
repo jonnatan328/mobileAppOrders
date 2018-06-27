@@ -26,7 +26,7 @@ export class SidemenuPage {
     * Create the array with the options of the side menu.
     */
     this.items = [
-      { title: 'Inicio', component: 'HomePage', icon: 'home' },
+      //{ title: 'Inicio', component: 'HomePage', icon: 'home' },
       { title: 'Pedidos', component: 'OrdersPage', icon: 'list-box' }
     ];
   }

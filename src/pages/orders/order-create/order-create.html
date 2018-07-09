@@ -7,11 +7,14 @@
       </button>
     </ion-buttons>
 
-    <ion-segment [(ngModel)]="page" color="pesto">
+    <ion-tabs color="pesto" tabsPlacement="top">
+      <ion-tab  *ngFor="let option of options" (ionSelect)="goToPage(option)" [root]="option.component" [tabTitle]="option.title" [tabIcon]="option.icon"></ion-tab>
+    </ion-tabs>
+    <!-- <ion-segment [(ngModel)]="page" color="pesto">
       <ion-segment-button (click)="goToPage(option)" value="{{option.title}}" *ngFor="let option of options">{{option.title}}
         <ion-icon style="zoom:0.7;" name="{{option.icon}}"></ion-icon>
       </ion-segment-button>
-    </ion-segment>
+    </ion-segment> -->
   </ion-toolbar>
   <ion-nav #tabs [root]="rootCreateOrderPage"></ion-nav>
 </ion-content>
